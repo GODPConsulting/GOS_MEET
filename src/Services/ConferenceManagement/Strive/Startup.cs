@@ -236,16 +236,27 @@ namespace Strive
 
             services.AddMediatR(typeof(Startup), typeof(CoreModule));
 
-            if (Environment.IsDevelopment())
-                services.AddCors(options =>
-                {
-                    options.AddPolicy("AllowAll",
-                        builder =>
-                        {
-                            builder.WithOrigins("http://localhost:55103").AllowAnyMethod().AllowAnyHeader()
-                                .AllowCredentials();
-                        });
-                });
+            //if (Environment.IsDevelopment())
+            //    services.AddCors(options =>
+            //    {
+            //        options.AddPolicy("AllowAll",
+            //            builder =>
+            //            {
+            //                builder.WithOrigins("http://localhost:55103").AllowAnyMethod().AllowAnyHeader()
+            //                    .AllowCredentials();
+            //            });
+            //    });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:55104", "https://collabo.goserp.co.uk", "https://sfu.goserp.co.uk").AllowAnyMethod().AllowAnyHeader()
+                           .AllowCredentials();
+                    });
+            });
+
 
             services.Configure<ForwardedHeadersOptions>(options =>
             {
