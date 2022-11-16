@@ -1,0 +1,30 @@
+name: SFU
+on:
+  push:
+    paths:
+      - src/Services/SFU/**
+      - .github/workflows/sfu-tests.yml
+
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - src/Services/SFU/**
+      - .github/workflows/sfu-tests.yml
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/Services/SFU
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: "src/Services/SFU/node_modules"
+          key: ${{ runner.os }}-sfu-modules-${{ hashFiles('src/Services/SFU/yarn.lock') }}
+      - name: Install modules
+        run: yarn
+      - name: Run tests
+        run: yarn test

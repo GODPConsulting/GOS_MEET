@@ -1,0 +1,39 @@
+name: ASP.NET Core
+on:
+  push:
+    paths:
+      - src/**
+      - .github/workflows/asp-net-core-test.yml
+      - codecov.yml
+      - "!src/Services/SFU/**"
+      - "!src/Web/WebSPA/Client/**"
+      - "!src/Tests/e2e/**"
+
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - src/**
+      - .github/workflows/asp-net-core-test.yml
+      - codecov.yml
+      - "!src/Services/SFU/**"
+      - "!src/Web/WebSPA/Client/**"
+      - "!src/Tests/e2e/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      - name: Install dependencies
+        run: dotnet restore Strive.sln
+      - name: Test
+        run: dotnet test Strive.sln --no-restore --verbosity normal --collect:"XPlat Code Coverage"
+      - uses: codecov/codecov-action@v1

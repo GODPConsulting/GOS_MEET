@@ -1,0 +1,41 @@
+version: "3.4"
+
+services:
+  nosqldata:
+    image: mongo
+
+  rabbitmq:
+    image: masstransit/rabbitmq
+
+  identity-api:
+    image: ${DOCKER_REGISTRY-}identityapi
+    build: ./Services/Identity/Identity.API
+
+  sfu:
+    image: ${DOCKER_REGISTRY-}sfu
+    build: "./Services/SFU"
+    depends_on:
+      - rabbitmq
+
+  strive:
+    image: ${DOCKER_REGISTRY-}strive
+    build:
+      context: .
+      dockerfile: Services/ConferenceManagement/Strive/Dockerfile
+    depends_on:
+      - nosqldata
+      - rabbitmq
+      - identity-api
+
+  webspa:
+    image: ${DOCKER_REGISTRY-}webspa
+    build:
+      context: "./Web/WebSPA"
+      args:
+        - GITCOMMIT
+        - GITREF
+        - GITTIMESTAMP
+    depends_on:
+      - identity-api
+      - sfu
+      - strive

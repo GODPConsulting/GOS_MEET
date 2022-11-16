@@ -1,0 +1,26 @@
+api:
+  insecure: true
+  dashboard: true
+
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+  file:
+    filename: "traefik.yml"
+
+certificatesResolvers:
+  letsEncrypt:
+    acme:
+      email: test@yourdomain.com
+      storage: acme.json
+      # caserver: https://acme-staging-v02.api.letsencrypt.org/directory # use this for tests
+      httpChallenge:
+        # used during the challenge
+        entryPoint: web

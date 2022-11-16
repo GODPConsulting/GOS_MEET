@@ -1,0 +1,3 @@
+ignore:
+  - "src/Services/ConferenceManagement/Strive.Tests.Utils"
+  - "src/Services/ConferenceManagement/Strive.Infrastructure.Tests"
