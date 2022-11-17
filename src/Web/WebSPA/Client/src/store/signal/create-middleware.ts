@@ -81,7 +81,6 @@ export default (): SignalRResult => {
                dispatch(actions.onConnected(appData));
             } catch (error) {
                log('an error occurred on connecting %O', error);
-
                dispatch(actions.onConnectionError(errors.signalRConnectionUnavailable(error.toString())));
 
                await connection.stop();

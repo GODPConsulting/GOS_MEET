@@ -42,6 +42,7 @@ export default class WebStore implements StateStore {
          const key = this.store.key(index);
 
          if (key?.startsWith(this.prefix)) {
+            //@ts-ignore
             keys.push(key.substr(this.prefix.length));
          }
       }

@@ -23,6 +23,19 @@ const appSettings: AppSettings = Object.fromEntries(
    ),
 ) as AppSettings;
 
+// const appSettings: AppSettings = {
+//    identityUrl: "https://collaboidentity.goserp.co.uk/",
+//    conferenceUrl: "https://conference.goserp.co.uk/",
+//    signalrHubUrl: "https://conference.goserp.co.uk/signalr",
+//    equipmentSignalrHubUrl: "https://conference.goserp.co.uk/equipment-signalr",
+//    frontendUrl: "https://collabo.goserp.co.uk/",
+//    gitInfo: {
+//       ref: '',
+//       commit: '',
+//       timestamp: ''
+//    }
+// };
+
 export default appSettings;
 
 export const ocidConfig: UserManagerSettings = {

@@ -77,7 +77,6 @@ export default function ChatMessage({ message, participantColors }: Props) {
 
    const isAnonymous = message && !message.sender;
    const isDisconnected = message?.sender && !sender;
-
    const linifyOptions = useRef<Options>({ className: classes.anchor, target: '_blank' });
 
    const participantColor = useMemo(
