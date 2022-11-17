@@ -1,47 +1,47 @@
-import debug, { Debugger } from 'debug';
+import pino from 'pino';
 
 const APP_NAME = 'strive-mediasoup';
 
+interface ILogger {
+   info(msg: string, ...args: any[]): void;
+   fatal(msg: string, ...args: any[]): void;
+   error(msg: string, ...args: any[]): void;
+   trace(msg: string, ...args: any[]): void;
+   debug(msg: string, ...args: any[]): void;
+   warn(msg: string, ...args: any[]): void;
+   child(bindings: any): ILogger;
+}
+
 export default class Logger {
+   private logger: ILogger;
+
    constructor(prefix?: string) {
       if (prefix) {
-         this._debug = debug(`${APP_NAME}:${prefix}`);
-         this._info = debug(`${APP_NAME}:INFO:${prefix}`);
-         this._warn = debug(`${APP_NAME}:WARN:${prefix}`);
-         this._error = debug(`${APP_NAME}:ERROR:${prefix}`);
+         this.logger = pino({
+            level: 'debug',
+            name: `${APP_NAME}:${prefix}`,
+         });
       } else {
-         this._debug = debug(APP_NAME);
-         this._info = debug(`${APP_NAME}:INFO`);
-         this._warn = debug(`${APP_NAME}:WARN`);
-         this._error = debug(`${APP_NAME}:ERROR`);
+         this.logger = pino({
+            level: 'debug',
+            name: `${APP_NAME}`,
+         });
       }
-
-      /* eslint-disable no-console */
-      this._debug.log = console.info.bind(console);
-      this._info.log = console.info.bind(console);
-      this._warn.log = console.warn.bind(console);
-      this._error.log = console.error.bind(console);
-      /* eslint-enable no-console */
    }
 
-   private _debug: Debugger;
-   private _info: Debugger;
-   private _warn: Debugger;
-   private _error: Debugger;
-
-   get debug() {
-      return this._debug;
+   debug(msg: string, ...args: any[]) {
+      this.logger.debug(msg, ...args);
    }
 
-   get info() {
-      return this._info;
+   info(msg: string, ...args: any[]): void {
+      this.logger.info(msg, ...args);
    }
 
-   get warn() {
-      return this._warn;
+   warn(msg: string, ...args: any[]) {
+      this.logger.warn(msg, ...args);
    }
 
-   get error() {
-      return this._error;
+   error(msg: string, ...args: any[]) {
+      this.logger.error(msg, ...args);
    }
 }
