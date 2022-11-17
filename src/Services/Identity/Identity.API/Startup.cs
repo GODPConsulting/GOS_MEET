@@ -63,8 +63,16 @@ namespace Identity.API
                 options.KnownProxies.Clear();
             });
 
-            services.AddCors(x =>
-                x.AddDefaultPolicy(builder => builder.WithOrigins(spaHost).AllowAnyMethod().AllowAnyHeader()));
+            //services.AddCors(x =>
+            //    x.AddDefaultPolicy(builder => builder.WithOrigins(spaHost).AllowAnyMethod().AllowAnyHeader()));
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder.WithOrigins(spaHost, "http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                    });
+            });
         }
 
         public void Configure(IApplicationBuilder app)
@@ -74,6 +82,8 @@ namespace Identity.API
             if (Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseCors();
+
+            app.UseCors("AllowAll");
 
             app.UseCookiePolicy(new CookiePolicyOptions
             {
