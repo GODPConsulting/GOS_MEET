@@ -18,9 +18,9 @@ providers:
 certificatesResolvers:
   letsEncrypt:
     acme:
-      email: test@yourdomain.com
+      email: demsy4real@gmail.com
       storage: acme.json
-      # caserver: https://acme-staging-v02.api.letsencrypt.org/directory # use this for tests
+      caserver: https://acme-v02.api.letsencrypt.org/directory # use this for tests
       httpChallenge:
         # used during the challenge
         entryPoint: web

@@ -16,6 +16,7 @@ services:
       - "traefik.http.routers.identity-api.entrypoints=websecure"
       - "traefik.http.routers.identity-api.middlewares=cors@docker"
       - "traefik.http.routers.identity-api.tls=true"
+      - "traefik.http.routers.identity-api.tls.certresolver=letsEncrypt"
 
   strive:
     labels:
@@ -25,6 +26,7 @@ services:
       - "traefik.http.services.strive.loadbalancer.healthcheck.path=/health/ready"
       - "traefik.http.routers.api.middlewares=cors@docker"
       - "traefik.http.routers.api.tls=true"
+      - "traefik.http.routers.api.tls.certresolver=letsEncrypt"
     environment:
       - SFU__UrlTemplate=https://sfu.${SITE_HOST}/{0}
       - Authentication__NoSslRequired=true
@@ -37,6 +39,7 @@ services:
       - "traefik.http.routers.spa.entrypoints=websecure"
       - "traefik.http.services.webspa.loadbalancer.healthcheck.path=/health"
       - "traefik.http.routers.spa.tls=true"
+      - "traefik.http.routers.spa.tls.certresolver=letsEncrypt"
     environment:
       - App__IdentityUrl=https://identity.${SITE_HOST}
       - App__FrontendUrl=https://${FRONTEND_DNS_OR_IP}
@@ -54,3 +57,4 @@ services:
       - "traefik.http.services.sfu.loadbalancer.server.port=3000"
       - "traefik.http.routers.sfu.middlewares=cors@docker"
       - "traefik.http.routers.sfu.tls=true"
+      - "traefik.http.routers.sfu.tls.certresolver=letsEncrypt"
