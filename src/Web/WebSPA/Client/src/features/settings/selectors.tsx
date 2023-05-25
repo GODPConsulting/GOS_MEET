@@ -1,14 +1,15 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from 'src/store';
 import { ProducerSource } from 'src/store/webrtc/types';
-import { AnyInputDevice } from './types';
+import { AnyInputDevice, InputDeviceDto } from './types';
+import { EquipmentConnection } from '../media/types';
 
 const getSource = (_: unknown, source: ProducerSource | undefined) => source;
 export const selectLocalDevices = (state: RootState) => state.settings.availableDevices;
 export const selectEquipmentConnections = (state: RootState) => state.media.equipment?.connections;
 
 export const selectAvailableInputDevicesFactory = () =>
-   createSelector(selectLocalDevices, selectEquipmentConnections, getSource, (devices, equipment, source) => {
+   createSelector(selectLocalDevices, selectEquipmentConnections, getSource, (devices : InputDeviceDto[] | null, equipment: Record<string, EquipmentConnection> | undefined, source: ProducerSource | undefined) => {
       const result = new Array<DeviceGroup>();
 
       if (devices) {
@@ -45,8 +46,8 @@ export const selectAvailableInputDevicesFactory = () =>
 export const selectIsDeviceAvailableFactory = () => {
    const availableDevicesSelector = selectAvailableInputDevicesFactory();
 
-   return createSelector(availableDevicesSelector, getSource, (devices) => {
-      return Boolean(devices.find((x) => x.devices.length > 0));
+   return createSelector(availableDevicesSelector, getSource, (devices: any) => {
+      return Boolean(devices.find((x: any) => x.devices.length > 0));
    });
 };
 

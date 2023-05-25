@@ -21,7 +21,7 @@ export default function AvailableEquipmentTable() {
          }
       >
          {devices &&
-            devices.map((x) => (
+            devices.map((x: any) => (
                <ListItem key={x.deviceId}>
                   <ListItemIcon>
                      {x.source === 'mic' ? (

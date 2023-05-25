@@ -19,7 +19,7 @@ const useUpdateDeviceLabelsAutomatically = () => {
    useEffect(() => {
       if (!connection || !devices) return;
 
-      if (devices.find((x) => !x.label)) {
+      if (devices.find((x: any) => !x.label)) {
          const handleDeviceEnabled = () => {
             dispatch(fetchDevices());
          };

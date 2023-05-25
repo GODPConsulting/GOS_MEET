@@ -1,42 +1,38 @@
 @model Identity.API.Quickstart.Account.LoginViewModel
 
-<div class="login-page">
-    <div class="lead">
-        <h1>Login</h1>
-        <p>Choose how to login</p>
-    </div>
+<div class="my-auto">
+    <div class="login-page">
+        <div class="lead text-center">
+            <img src="~/logo.svg" class="logo">
+            <img src="" />
+        </div>
 
-    <partial name="_ValidationSummary" />
+        <partial name="_ValidationSummary" />
 
-    <div class="row">
+        <div class="row d-flex justify-content-center">
 
-        @if (Model.EnableLocalLogin)
-        {
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>Demo Account</h2>
-                    </div>
+            @if (Model.EnableLocalLogin)
+            {
+                <div class="col-md-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <form asp-route="Login">
+                                <input type="hidden" asp-for="ReturnUrl" />
 
-                    <div class="card-body">
-                        <form asp-route="Login">
-                            <input type="hidden" asp-for="ReturnUrl" />
-
-                            <div class="form-group">
-                                <label asp-for="Username"></label>
-                                <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Password"></label>
-                                <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
-                            </div>
-                            <p>For this demo, any password will be accepted.</p>
-                            <button class="btn btn-primary" name="button" value="login">Login</button>
-                            <button class="btn btn-secondary" name="button" value="cancel">Cancel</button>
-                        </form>
+                                <div class="form-group">
+                                    <label asp-for="Username"></label>
+                                    <input class="form-control" placeholder="Enter Username" asp-for="Username" autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Password"></label>
+                                    <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
+                                </div>
+                                <button class="btn btn-dark py-3 w-100" style="background: #150B01;" name="button" value="signin">Sign In</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 </div>
